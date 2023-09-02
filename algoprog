@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+int main () {
+    int age;
+    printf("Masukan umur anda disini: ");
+    scanf("%d", &age);
+
+    if(age <= 0){
+        printf("Invalid input");
+    }
+
+    else if(age >= 18){
+        printf("Umur Anda memenuhi  untuk mengikuti pemilu");
+    }
+    
+    else if(age < 18){
+        printf("Maaf umur anda belum memenuhi untuk mengikuti pemilu");
+    }
+}
