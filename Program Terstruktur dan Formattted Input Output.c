@@ -47,7 +47,7 @@ int main() {
                 printf("Invalid. Hanya boleh memasukkan 1 atau 2.\n");
             }
             
-//looping ketika input selain angka,kembali lagi
+//looping ketika input selain angka 1 dan 2,kembali lagi
         } while (results[i] != 1 && results[i] != 2);
 
         // ! Menghitung jumlah lulus dan gagal
