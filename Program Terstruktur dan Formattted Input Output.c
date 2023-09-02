@@ -1,4 +1,19 @@
-{
+#include <stdio.h>
+/*
+    menggunakan function "clearInputBuffer" untuk menghapus input buffer, referensi:
+    https://stackoverflow.com/questions/7898215/how-can-i-clear-an-input-buffer-in-c
+*/
+void clearInputBuffer() {
+    int c;
+    // ! membaca karakter dari buffer masukan sampai mencapai newline (\n)
+    while ((c = getchar()) != '\n' && c != EOF);
+} // membuat salam pembuka
+void greet() {
+    printf("===================\n");
+    printf("Selamat datang");
+    printf("\n===================\n");
+}
+int main() {
     // ! Inisialisasi variabel
     char names[100][50];
     int results[100];
@@ -12,6 +27,7 @@
         scanf("%d", &numStudents);
         clearInputBuffer(); // ! menghapus input buffer
     } 
+    
     //looping ketika input selain angka,kembali lagi
     while (numStudents <= 0 || numStudents > 100);
 
@@ -30,6 +46,7 @@
                 clearInputBuffer(); // ! jika input tidak valid, maka hapus buffer input
                 printf("Invalid. Hanya boleh memasukkan 1 atau 2.\n");
             }
+            
 //looping ketika input selain angka,kembali lagi
         } while (results[i] != 1 && results[i] != 2);
 
