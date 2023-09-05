@@ -2,63 +2,60 @@
 #include <string.h>
 
 int main() {
-    float keiritan_pertamax_konstan = 15.0; // KM per liter
-    float keiritan_pertamax_stopngo = 10.0; // KM per liter
-    float keiritan_pertalite_konstan = 12.0; // KM per liter
-    float keiritan_pertalite_stopngo = 8.0;  // KM per liter
-
-    float bensin_awal, jarak_tempuh;
-    char mode_sopir[20], jenis_bensin[20];
-
-    // Input bensin awal, jarak tempuh, jenis bensin, dan mode sopir
-    printf("Masukkan jumlah bensin (liter): ");
-    scanf("%f", &bensin_awal);
-    printf("Masukkan jenis bensin (Pertamax atau Pertalite): ");
-    scanf("%s", jenis_bensin);
+    char bahanBakar[20];
+    int jarakTempuh;
+    char modeMenyopir[20];
+    float keiritan;
+    
+    printf("Masukkan jenis bahan bakar (Pertamax/Pertalite): ");
+    scanf("%s", bahanBakar);
+    
     printf("Masukkan jarak yang akan ditempuh (km): ");
-    scanf("%f", &jarak_tempuh);
-    printf("Masukkan mode sopir (konstan atau stop&go): ");
-    scanf("%s", mode_sopir);
-
-    float keiritan_bahan_bakar;
-
-    // Menentukan keiritan bahan bakar berdasarkan jenis bensin dan mode sopir
-    if (strcmp(jenis_bensin, "Pertamax") == 0) {
-        if (strcmp(mode_sopir, "konstan") == 0) {
-            keiritan_bahan_bakar = keiritan_pertamax_konstan;
-        } else if (strcmp(mode_sopir, "stop&go") == 0) {
-            keiritan_bahan_bakar = keiritan_pertamax_stopngo;
-        } else {
-            printf("Mode sopir tidak valid.\n");
-            return 1;
+    scanf("%d", &jarakTempuh);
+    
+    printf("Masukkan mode menyopir (konstan/dalam kota, stop&go/luar kota): ");
+    scanf("%s", modeMenyopir);
+    
+    // Menghitung keiritan berdasarkan jenis bahan bakar dan mode menyopir
+    if (strcmp(bahanBakar, "Pertamax") == 0) {
+        if (strcmp(modeMenyopir, "konstan") == 0) {
+            keiritan = 15.0;
+        } else if (strcmp(modeMenyopir, "stop&go") == 0) {
+            keiritan = 10.0;
         }
-    } else if (strcmp(jenis_bensin, "Pertalite") == 0) {
-        if (strcmp(mode_sopir, "konstan") == 0) {
-            keiritan_bahan_bakar = keiritan_pertalite_konstan;
-        } else if (strcmp(mode_sopir, "stop&go") == 0) {
-            keiritan_bahan_bakar = keiritan_pertalite_stopngo;
-        } else {
-            printf("Mode sopir tidak valid.\n");
-            return 1;
+    } else if (strcmp(bahanBakar, "Pertalite") == 0) {
+        if (strcmp(modeMenyopir, "konstan") == 0) {
+            keiritan = 12.0;
+        } else if (strcmp(modeMenyopir, "stop&go") == 0) {
+            keiritan = 8.0;
         }
-    } else {
-        printf("Jenis bensin tidak valid.\n");
-        return 1;
     }
-
-    // Menghitung bensin yang digunakan
-    float bensin_yang_digunakan = jarak_tempuh / keiritan_bahan_bakar;
-
-    // Menghitung bensin akhir
-    float bensin_akhir = bensin_awal - bensin_yang_digunakan;
-
-    // Output hasil
-    if (bensin_akhir >= 0) {
-        printf("Bensin yang digunakan: %.2f liter\n", bensin_yang_digunakan);
-        printf("Bensin akhir: %.2f liter\n", bensin_akhir);
+    
+    // Menghitung penggunaan bensin
+    float penggunaanBensin = (float)jarakTempuh / keiritan;
+    
+    printf("Jumlah pengurangan bensin setelah menempuh %d km: %.2f liter\n", jarakTempuh, penggunaanBensin);
+    
+    // Menampilkan perbandingan bahan bakar dan mode menyopir
+    printf("Perbandingan hasil:\n");
+    printf("- Penggunaan bahan bakar (%s) dalam mode %s: %.2f liter\n", bahanBakar, modeMenyopir, penggunaanBensin);
+    
+    // Menghitung penggunaan bahan bakar dengan jenis bahan bakar yang berbeda
+    char bahanBakarLain[20];
+    strcpy(bahanBakarLain, strcmp(bahanBakar, "Pertamax") == 0 ? "Pertalite" : "Pertamax");
+    float keiritanLain = (strcmp(bahanBakarLain, "Pertamax") == 0) ? (strcmp(modeMenyopir, "konstan") == 0 ? 15.0 : 10.0) : (strcmp(modeMenyopir, "konstan") == 0 ? 12.0 : 8.0);
+    float penggunaanBensinLain = (float)jarakTempuh / keiritanLain;
+    
+    printf("- Penggunaan bahan bakar (%s) dalam mode %s: %.2f liter\n", bahanBakarLain, modeMenyopir, penggunaanBensinLain);
+    
+    // Membandingkan konsumsi bahan bakar
+    if (penggunaanBensin < penggunaanBensinLain) {
+        printf("Dalam mode %s, %s lebih efisien.\n", modeMenyopir, bahanBakar);
+    } else if (penggunaanBensin > penggunaanBensinLain) {
+        printf("Dalam mode %s, %s lebih efisien.\n", modeMenyopir, bahanBakarLain);
     } else {
-        printf("Bensin tidak mencukupi untuk menempuh jarak tersebut.\n");
+        printf("Dalam mode %s, kedua bahan bakar memiliki efisiensi yang sama.\n", modeMenyopir);
     }
-
+    
     return 0;
 }
