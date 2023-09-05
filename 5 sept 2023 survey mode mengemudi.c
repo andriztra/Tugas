@@ -13,7 +13,7 @@ int main() {
     printf("Masukkan jarak yang akan ditempuh (km): ");
     scanf("%d", &jarakTempuh);
     
-    printf("Masukkan mode menyopir (konstan/dalam kota, stop&go/luar kota): ");
+    printf("Masukkan mode menyopir (konstan, stop&go): ");
     scanf("%s", modeMenyopir);
     
     // Menghitung keiritan berdasarkan jenis bahan bakar dan mode menyopir
