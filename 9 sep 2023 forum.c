@@ -121,11 +121,13 @@ int main() {
         }
 
         // Menampilkan hasil
+        puts("***************************************");
         printf("\nHasil:\n");
         printf("NIM: %s\n", nim);
         printf("Nama: %s\n", nama);
         printf("Nilai Akhir: %.2lf\n", nilai_akhir);
         printf("Grade: %c\n", grade);
+        puts("***************************************");
 
         printf("Apakah Anda ingin mengulang lagi? (y/n): ");
         scanf(" %c", &ulangi);
