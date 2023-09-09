@@ -8,14 +8,15 @@ int main() {
     double tugas, uts, uas, nilai_akhir;
     char grade;
     char ulangi;
+
+    do {
+        int isNimValid = 0;
+        while (!isNimValid) {
     puts("***************************************");
     printf("Tekan Enter untuk memulai program...\n");
     puts("***************************************");
     getchar(); // Menunggu pengguna menekan Enter
 
-    do {
-        int isNimValid = 0;
-        while (!isNimValid) {
             printf("Masukkan NIM (10 digit angka): ");
             if (scanf("%10s", nim) != 1) {
                 printf("Input NIM tidak valid! Masukkan 10 digit angka.\n");
