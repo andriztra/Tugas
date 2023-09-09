@@ -19,7 +19,7 @@ int main() {
     getchar(); // Menunggu pengguna menekan Enter
 
             printf("Masukkan NIM (10 digit angka): ");
-            if (scanf("%10s", nim) != 1) {
+            if (scanf("%10s", nim) != 2) {
                 printf("Input NIM tidak valid! Masukkan 10 digit angka.\n");
                 while (getchar() != '\n'); // Membersihkan buffer input
             } else {
