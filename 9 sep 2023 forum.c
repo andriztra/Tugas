@@ -13,6 +13,7 @@ int main() {
         int isNimValid = 0;
         while (!isNimValid) {
     puts("***************************************");
+    printf("SELAMAT DATANG DI PROGRAM INI\n");
     printf("Tekan Enter untuk memulai program...\n");
     puts("***************************************");
     getchar(); // Menunggu pengguna menekan Enter
