@@ -67,5 +67,5 @@ int main() {
         printf("Grade: %c\n\n", grade);
     }
 
-    return 0;
+    return 0;
 }
