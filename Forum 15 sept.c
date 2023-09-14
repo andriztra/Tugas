@@ -39,48 +39,56 @@ void kalikan(int matrix1[4], int matrix2[4]) {
 }
 
 int main() {
+    char input[2]; // Untuk menerima input 'y' atau 'n'
+
     printf("====================\n");
     printf("PROGRAM HASIL MATRIX\n");
     printf("====================\n");
 
-    int matrix1[4];
-    int matrix2[4];
-    char input[20];
+    do {
+        int matrix1[4];
+        int matrix2[4];
 
-    printf("Matrix 1\n");
-    for (int i = 0; i < 4; i++) {
-        printf("Bilangan %d: ", i + 1);
-        scanf("%s", input);
-        
-        // Memeriksa apakah input adalah bilangan bulat
-        while (!isInteger(input)) {
-            printf("Input tidak valid. Masukkan bilangan bulat: ");
+        printf("Matrix 1\n");
+        for (int i = 0; i < 4; i++) {
+            printf("Bilangan %d: ", i + 1);
             scanf("%s", input);
-        }
-        
-        // Mengonversi input menjadi bilangan bulat
-        matrix1[i] = atoi(input);
-    }
 
-    printf("\nMatrix 2\n");
-    for (int i = 0; i < 4; i++) {
-        printf("Bilangan %d: ", i + 1);
-        scanf("%s", input);
-        
-        // Memeriksa apakah input adalah bilangan bulat
-        while (!isInteger(input)) {
-            printf("Input tidak valid. Masukkan bilangan bulat: ");
+            // Memeriksa apakah input adalah bilangan bulat
+            while (!isInteger(input)) {
+                printf("Input tidak valid. Masukkan bilangan bulat: ");
+                scanf("%s", input);
+            }
+
+            // Mengonversi input menjadi bilangan bulat
+            matrix1[i] = atoi(input);
+        }
+
+        printf("\nMatrix 2\n");
+        for (int i = 0; i < 4; i++) {
+            printf("Bilangan %d: ", i + 1);
             scanf("%s", input);
+
+            // Memeriksa apakah input adalah bilangan bulat
+            while (!isInteger(input)) {
+                printf("Input tidak valid. Masukkan bilangan bulat: ");
+                scanf("%s", input);
+            }
+
+            // Mengonversi input menjadi bilangan bulat
+            matrix2[i] = atoi(input);
         }
-        
-        // Mengonversi input menjadi bilangan bulat
-        matrix2[i] = atoi(input);
-    }
 
-    tampilkanMatrix("Matrix 1", matrix1);
-    tampilkanMatrix("Matrix 2", matrix2);
+        tampilkanMatrix("Matrix 1", matrix1);
+        tampilkanMatrix("Matrix 2", matrix2);
 
-    kalikan(matrix1, matrix2);
+        kalikan(matrix1, matrix2);
+
+        // Menanyakan apakah pengguna ingin mengulang perhitungan
+        printf("\nMengulang perhitungan? (y/n): ");
+        scanf("%s", input);
+
+    } while (input[0] == 'y' || input[0] == 'Y');
 
     return 0;
 }
