@@ -89,6 +89,6 @@ int main() {
         scanf("%s", input);
 
     } while (input[0] == 'y' || input[0] == 'Y');
-
+    puts("Terimakasih telah menggunakan program ini");
     return 0;
 }
