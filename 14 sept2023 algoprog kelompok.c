@@ -22,7 +22,7 @@ int main() {
 	    } while (true);
 	
 	    for (i = 1; i <= jumlahMahasiswa; i++) {
-	        printf("Mahasiswa ke-%d\n", i);
+	        printf("\nMahasiswa ke-%d\n", i);
 	
 	        float nilaiQuis, nilaiTugas, nilaiAbsensi, nilaiPraktek, nilaiUAS, totalNilai;
 	        char grade;
@@ -75,18 +75,23 @@ int main() {
 	        if (totalNilai <= 55) {
 	            grade = 'E';
 	            printf("Rata Rata Nilai adalah %.1f \n", totalNilai);
+				puts("Tidak Lulus");
 	        } else if (totalNilai <= 65) {
 	            grade = 'D';
 	            printf("Rata Rata Nilai adalah %.1f \n", totalNilai);
+				puts("Tidak Lulus");
 	        } else if (totalNilai <= 75) {
 	            grade = 'C';
 	            printf("Rata Rata Nilai adalah %.1f \n", totalNilai);
+				puts("Lulus");
 	        } else if (totalNilai <= 85) {
 	            grade = 'B';
 	            printf("Rata Rata Nilai adalah %.1f \n", totalNilai);
+				puts("Lulus");
 	        } else {
 	            grade = 'A';
 	            printf("Rata Rata Nilai adalah %.1f \n", totalNilai);
+				puts("Lulus");
 	        }
 	
 	        // Menampilkan grade
@@ -100,9 +105,9 @@ int main() {
 	    
 	    printf("Rata-rata nilai semua mahasiswa: %.1f\n", rataRata);
 	    if (totalNilaiSemuaMahasiswa <= 65) {
-	            printf("Label: Tidak Lulus\n\n");
+	            printf("Label: TIDAK SESUAI TARGET LULUS\n\n");
 	        } else {
-	            printf("Label: LULUS\n\n");
+	            printf("Label: SESUAI TARGET LULUS\n\n");
 				}
 	            printf("Apakah Anda ingin mengulang lagi? (y/n): ");
 	            scanf(" %c", &ulangi);
