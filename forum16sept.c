@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <conio.h> // Hanya tersedia di lingkungan Windows
 
 struct Mahasiswa {
     char nim[20];
@@ -36,11 +37,28 @@ void addStudent(struct Mahasiswa *mahasiswa, int *count) {
 
     while (1) {
         printf("Masukkan NIM: ");
-        scanf("%s", nim);
+        int i = 0;
+        char ch;
+        
+        while (1) {
+            ch = getch();
+            
+            if (ch == 13) { // Enter key
+                nim[i] = '\0';
+                break;
+            } else if (ch == 8 && i > 0) { // Backspace key
+                printf("\b \b");
+                i--;
+            } else if (isdigit(ch) && i < 19) {
+                printf("%c", ch);
+                nim[i] = ch;
+                i++;
+            }
+        }
 
         // Validasi NIM
         if (!isNumeric(nim)) {
-            printf("Input NIM tidak valid. Harap masukkan angka positif.\n");
+            printf("\nInput NIM tidak valid. Harap masukkan angka positif.\n");
             continue;
         }
 
@@ -48,26 +66,79 @@ void addStudent(struct Mahasiswa *mahasiswa, int *count) {
     }
 
     while (1) {
-        printf("Masukkan Nama: ");
-        scanf("%s", nama);        
+        printf("\nMasukkan Nama: ");
+        int i = 0;
+        char ch;
+        
+        while (1) {
+            ch = getch();
+            
+            if (ch == 13) { // Enter key
+                nama[i] = '\0';
+                break;
+            } else if (ch == 8 && i > 0) { // Backspace key
+                printf("\b \b");
+                i--;
+            } else if (isalpha(ch) && i < 49) {
+                printf("%c", ch);
+                nama[i] = ch;
+                i++;
+            }
+        }
+
         // Validasi Nama
         if (!isAlpha(nama)) {
-            printf("Input Nama tidak valid. Harap masukkan huruf saja.\n");
+            printf("\nInput Nama tidak valid. Harap masukkan huruf saja.\n");
             continue;
         }
 
         break;
     }
 
-    printf("Masukkan Alamat: ");
-    scanf("%s", alamat);
+    printf("\nMasukkan Alamat: ");
+    int i = 0;
+    char ch;
+    
+    while (1) {
+        ch = getch();
+        
+        if (ch == 13) { // Enter key
+            alamat[i] = '\0';
+            break;
+        } else if (ch == 8 && i > 0) { // Backspace key
+            printf("\b \b");
+            i--;
+        } else if (i < 99) {
+            printf("%c", ch);
+            alamat[i] = ch;
+            i++;
+        }
+    }
 
     while (1) {
-        printf("Masukkan No HP: ");
-        scanf("%s", no_hp);        
+        printf("\nMasukkan No HP: ");
+        int i = 0;
+        char ch;
+        
+        while (1) {
+            ch = getch();
+            
+            if (ch == 13) { // Enter key
+                no_hp[i] = '\0';
+                break;
+            } else if (ch == 8 && i > 0) { // Backspace key
+                printf("\b \b");
+                i--;
+            } else if (isdigit(ch) && i < 14) {
+                printf("%c", ch);
+                no_hp[i] = ch;
+                i++;
+            }
+        }
+
         // Validasi No HP
         if (!isNumeric(no_hp)) {
-            printf("Input No HP tidak valid. Harap masukkan angka saja.\n");
+            printf("\nInput No HP tidak valid. Harap masukkan angka saja.\n");
             continue;
         }
 
@@ -80,7 +151,7 @@ void addStudent(struct Mahasiswa *mahasiswa, int *count) {
     strcpy(mahasiswa[*count].alamat, alamat);
     strcpy(mahasiswa[*count].no_hp, no_hp);
     (*count)++; // Menambah jumlah mahasiswa yang telah diinput
-    printf("Data mahasiswa %s dengan NIM %s berhasil ditambahkan!\n", nama, nim);
+    printf("\nData mahasiswa %s dengan NIM %s berhasil ditambahkan!\n", nama, nim);
 }
 
 void viewStudents(struct Mahasiswa *mahasiswa, int count) {
@@ -101,6 +172,184 @@ void viewStudents(struct Mahasiswa *mahasiswa, int count) {
     }
 }
 
+void deleteStudent(struct Mahasiswa *mahasiswa, int *count) {
+    printf("\n== Menu Delete ==\n");
+    
+    if (*count == 0) {
+        printf("Daftar mahasiswa kosong.\n");
+        return;
+    }
+
+    char nim[20];
+    printf("Masukkan NIM mahasiswa yang ingin dihapus: ");
+    int i = 0;
+    char ch;
+    
+    while (1) {
+        ch = getch();
+        
+        if (ch == 13) { // Enter key
+            nim[i] = '\0';
+            break;
+        } else if (ch == 8 && i > 0) { // Backspace key
+            printf("\b \b");
+            i--;
+        } else if (i < 19) {
+            printf("%c", ch);
+            nim[i] = ch;
+            i++;
+        }
+    }
+
+    int found = 0;
+    for (int i = 0; i < *count; i++) {
+        if (strcmp(mahasiswa[i].nim, nim) == 0) {
+            // Menghapus mahasiswa dengan mengganti data dengan data dari indeks terakhir
+            (*count) -= 1;
+            mahasiswa[i] = mahasiswa[*count];
+            printf("\nData mahasiswa dengan NIM %s berhasil dihapus.\n", nim);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("\nData mahasiswa dengan NIM %s tidak ditemukan.\n", nim);
+    }
+}
+
+void updateStudent(struct Mahasiswa *mahasiswa, int count) {
+    printf("\n== Menu Update ==\n");
+    
+    if (count == 0) {
+        printf("Daftar mahasiswa kosong.\n");
+        return;
+    }
+
+    char nim[20];
+    printf("Masukkan NIM mahasiswa yang ingin diupdate: ");
+    int i = 0;
+    char ch;
+    
+    while (1) {
+        ch = getch();
+        
+        if (ch == 13) { // Enter key
+            nim[i] = '\0';
+            break;
+        } else if (ch == 8 && i > 0) { // Backspace key
+            printf("\b \b");
+            i--;
+        } else if (i < 19) {
+            printf("%c", ch);
+            nim[i] = ch;
+            i++;
+        }
+    }
+
+    int found = 0;
+    for (int i = 0; i < count; i++) {
+        if (strcmp(mahasiswa[i].nim, nim) == 0) {
+            printf("\nData mahasiswa dengan NIM %s ditemukan. Silakan masukkan data yang baru:\n", nim);
+            
+            char nama[50], alamat[100], no_hp[15];
+
+            while (1) {
+                printf("Masukkan Nama: ");
+                int i = 0;
+                char ch;
+                
+                while (1) {
+                    ch = getch();
+                    
+                    if (ch == 13) { // Enter key
+                        nama[i] = '\0';
+                        break;
+                    } else if (ch == 8 && i > 0) { // Backspace key
+                        printf("\b \b");
+                        i--;
+                    } else if (isalpha(ch) && i < 49) {
+                        printf("%c", ch);
+                        nama[i] = ch;
+                        i++;
+                    }
+                }
+
+                // Validasi Nama
+                if (!isAlpha(nama)) {
+                    printf("\nInput Nama tidak valid. Harap masukkan huruf saja.\n");
+                    continue;
+                }
+
+                break;
+            }
+
+            printf("\nMasukkan Alamat: ");
+            int i = 0;
+            char ch;
+            
+            while (1) {
+                ch = getch();
+                
+                if (ch == 13) { // Enter key
+                    alamat[i] = '\0';
+                    break;
+                } else if (ch == 8 && i > 0) { // Backspace key
+                    printf("\b \b");
+                    i--;
+                } else if (i < 99) {
+                    printf("%c", ch);
+                    alamat[i] = ch;
+                    i++;
+                }
+            }
+
+            while (1) {
+                printf("\nMasukkan No HP: ");
+                int i = 0;
+                char ch;
+                
+                while (1) {
+                    ch = getch();
+                    
+                    if (ch == 13) { // Enter key
+                        no_hp[i] = '\0';
+                        break;
+                    } else if (ch == 8 && i > 0) { // Backspace key
+                        printf("\b \b");
+                        i--;
+                    } else if (isdigit(ch) && i < 14) {
+                        printf("%c", ch);
+                        no_hp[i] = ch;
+                        i++;
+                    }
+                }
+
+                // Validasi No HP
+                if (!isNumeric(no_hp)) {
+                    printf("\nInput No HP tidak valid. Harap masukkan angka saja.\n");
+                    continue;
+                }
+
+                break;
+            }
+
+            // Perbarui data mahasiswa
+            strcpy(mahasiswa[i].nama, nama);
+            strcpy(mahasiswa[i].alamat, alamat);
+            strcpy(mahasiswa[i].no_hp, no_hp);
+            
+            printf("\nData mahasiswa dengan NIM %s berhasil diupdate!\n", nim);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("\nData mahasiswa dengan NIM %s tidak ditemukan.\n", nim);
+    }
+}
+
 void searchStudents(struct Mahasiswa *mahasiswa, int count) {
     printf("\n== Menu Search ==\n");
     
@@ -111,9 +360,26 @@ void searchStudents(struct Mahasiswa *mahasiswa, int count) {
 
     char keyword[50];
     printf("Masukkan kata kunci untuk pencarian: ");
-    scanf("%s", keyword);
+    int i = 0;
+    char ch;
+    
+    while (1) {
+        ch = getch();
+        
+        if (ch == 13) { // Enter key
+            keyword[i] = '\0';
+            break;
+        } else if (ch == 8 && i > 0) { // Backspace key
+            printf("\b \b");
+            i--;
+        } else if (i < 49) {
+            printf("%c", ch);
+            keyword[i] = ch;
+            i++;
+        }
+    }
 
-    printf("Hasil pencarian:\n");
+    printf("\nHasil pencarian:\n");
     int found = 0;
     for (int i = 0; i < count; i++) {
         if (strstr(mahasiswa[i].nim, keyword) || strstr(mahasiswa[i].nama, keyword) || strstr(mahasiswa[i].alamat, keyword) || strstr(mahasiswa[i].no_hp, keyword)) {
@@ -128,68 +394,6 @@ void searchStudents(struct Mahasiswa *mahasiswa, int count) {
 
     if (!found) {
         printf("Tidak ditemukan hasil pencarian untuk kata kunci '%s'.\n", keyword);
-    }
-}
-
-void updateStudent(struct Mahasiswa *mahasiswa, int count) {
-    printf("\n== Menu Update ==\n");
-    
-    if (count == 0) {
-        printf("Daftar mahasiswa kosong.\n");
-        return;
-    }
-
-    char nim[20];
-    printf("Masukkan NIM mahasiswa yang ingin diupdate: ");
-    scanf("%s", nim);
-
-    int found = 0;
-    for (int i = 0; i < count; i++) {
-        if (strcmp(mahasiswa[i].nim, nim) == 0) {
-            printf("Data mahasiswa dengan NIM %s ditemukan. Silakan masukkan data yang baru:\n", nim);
-            
-            char nama[50], alamat[100], no_hp[15];
-
-            while (1) {
-                printf("Masukkan Nama: ");
-                scanf("%s", nama);        
-                // Validasi Nama
-                if (!isAlpha(nama)) {
-                    printf("Input Nama tidak valid. Harap masukkan huruf saja.\n");
-                    continue;
-                }
-
-                break;
-            }
-
-            printf("Masukkan Alamat: ");
-            scanf("%s", alamat);
-
-            while (1) {
-                printf("Masukkan No HP: ");
-                scanf("%s", no_hp);        
-                // Validasi No HP
-                if (!isNumeric(no_hp)) {
-                    printf("Input No HP tidak valid. Harap masukkan angka saja.\n");
-                    continue;
-                }
-
-                break;
-            }
-
-            // Perbarui data mahasiswa
-            strcpy(mahasiswa[i].nama, nama);
-            strcpy(mahasiswa[i].alamat, alamat);
-            strcpy(mahasiswa[i].no_hp, no_hp);
-            
-            printf("Data mahasiswa dengan NIM %s berhasil diupdate!\n", nim);
-            found = 1;
-            break;
-        }
-    }
-
-    if (!found) {
-        printf("Data mahasiswa dengan NIM %s tidak ditemukan.\n", nim);
     }
 }
 
@@ -209,11 +413,8 @@ int main() {
 
         int choice;
         printf("Pilih menu (1/2/3/4/5/6): ");
-        if (scanf("%d", &choice) != 1 || choice < 1 || choice > 6) {
-            printf("Input tidak valid. Harap masukkan pilihan menu yang benar (1-6).\n");
-            while (getchar() != '\n'); // Membersihkan buffer input
-            continue;
-        }
+        scanf("%d", &choice);
+        while (getchar() != '\n'); // Membersihkan buffer input
 
         switch (choice) {
             case 1:
@@ -223,7 +424,7 @@ int main() {
                 viewStudents(mahasiswa, count);
                 break;
             case 3:
-                // Implementasi deleteStudent
+                deleteStudent(mahasiswa, &count);
                 break;
             case 4:
                 updateStudent(mahasiswa, count);
@@ -234,6 +435,9 @@ int main() {
             case 6:
                 printf("Terima kasih! Program selesai.\n");
                 return 0;
+            default:
+                printf("Pilihan menu tidak valid. Harap masukkan pilihan yang benar (1-6).\n");
+                break;
         }
     }
     return 0;
