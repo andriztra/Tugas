@@ -5,10 +5,11 @@
 
 // Fungsi untuk memeriksa apakah sebuah string hanya mengandung karakter alfabet
 int isAlphabetic(const char *str) {
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (!isalpha(str[i])) {
+    while (*str) {
+        if (!isalpha(*str)) {
             return 0; // Terdapat karakter yang bukan alfabet
         }
+        str++;
     }
     return 1; // Semua karakter adalah alfabet
 }
@@ -28,24 +29,25 @@ int isBinusEmail(const char *str) {
 
 // Fungsi untuk memeriksa apakah sebuah string hanya berisi angka
 int isNumeric(const char *str) {
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (!isdigit(str[i])) {
+    while (*str) {
+        if (!isdigit(*str)) {
             return 0; // Terdapat karakter yang bukan angka
         }
+        str++;
     }
     return 1; // Semua karakter adalah angka
 }
 
 // Struktur untuk menyimpan data kontak
-struct Contact {
+typedef struct Contact {
     char name[100];
     char phone[15];
     char email[100];
-    struct Contact* next;
-};
+    struct Contact *next;
+} Contact;
 
 // Fungsi untuk menambahkan kontak ke linked list
-void addContact(struct Contact **head, char *name, char *phone, char *email) {
+void addContact(Contact **head, char *name, char *phone, char *email) {
     // Validasi nama (hanya alfabet)
     if (!isAlphabetic(name)) {
         printf("Nama harus berisi karakter alfabet.\n");
@@ -64,7 +66,7 @@ void addContact(struct Contact **head, char *name, char *phone, char *email) {
         return;
     }
 
-    struct Contact* newContact = (struct Contact*)malloc(sizeof(struct Contact));
+    Contact *newContact = (Contact *)malloc(sizeof(Contact));
     if (newContact == NULL) {
         printf("Gagal mengalokasikan memori.\n");
         return;
@@ -80,7 +82,7 @@ void addContact(struct Contact **head, char *name, char *phone, char *email) {
 }
 
 // Fungsi untuk menampilkan semua kontak
-void displayContacts(struct Contact *head) {
+void displayContacts(Contact *head) {
     if (head == NULL) {
         printf("Daftar kontak kosong.\n");
         return;
@@ -97,9 +99,9 @@ void displayContacts(struct Contact *head) {
 }
 
 // Fungsi untuk menghapus kontak berdasarkan nama
-void deleteContact(struct Contact **head, char *name) {
-    struct Contact* current = *head;
-    struct Contact* prev = NULL;
+void deleteContact(Contact **head, char *name) {
+    Contact *current = *head;
+    Contact *prev = NULL;
     int found = 0;
 
     while (current != NULL) {
@@ -124,7 +126,7 @@ void deleteContact(struct Contact **head, char *name) {
 }
 
 int main() {
-    struct Contact* head = NULL; // Inisialisasi linked list kosong
+    Contact *head = NULL; // Inisialisasi linked list kosong
     int choice;
     char name[100], phone[15], email[100];
 
