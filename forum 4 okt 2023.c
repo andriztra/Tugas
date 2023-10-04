@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h> // Library tambahan untuk isdigit()
 
 // Enumerasi untuk Penerbit
 enum Penerbit {
@@ -102,26 +103,27 @@ int main() {
                 if (jumlah_buku < 100) {
                     struct Buku buku;
                     printf("ISBN: ");
-                    if (scanf("%13s", buku.isbn) != 1) {
+                    if (scanf("%13s", buku.isbn) != 1 || !isdigit(buku.isbn[0])) {
                         printf("ISBN tidak valid. Masukkan angka saja.\n");
                         while (getchar() != '\n'); // Membersihkan buffer masukan
                         continue; // Mengulangi loop
                     }
 
-                    // Memeriksa apakah ISBN hanya berisi angka
-                    int valid = 1;
-                    for (int i = 0; i < strlen(buku.isbn); i++) {
-                        if (!isdigit(buku.isbn[i])) {
-                            valid = 0;
-                            break;
-                        }
-                    }
                     printf("Judul: ");
                     scanf("%s", buku.judul);
                     printf("Pengarang: ");
                     scanf("%s", buku.pengarang);
+
+                    // Memvalidasi tahun terbit
+                    int tahun_terbit;
                     printf("Tahun Terbit: ");
-                    scanf("%d", &buku.tahun_terbit);
+                    if (scanf("%d", &tahun_terbit) != 1 || tahun_terbit < 0) {
+                        printf("Tahun terbit tidak valid. Masukkan tahun yang valid.\n");
+                        while (getchar() != '\n'); // Membersihkan buffer masukan
+                        continue; // Mengulangi loop
+                    }
+                    buku.tahun_terbit = tahun_terbit;
+
                     printf("Penerbit (0-Gramedia, 1-Elexmedia, 2-Andi Offset, 3-Pustaka): ");
                     scanf("%d", (int*)&buku.penerbit);
                     printf("Kategori (0-Fiksi, 1-Teks, 2-Sejarah, 3-Novel): ");
@@ -134,6 +136,7 @@ int main() {
                     printf("Perpustakaan sudah penuh.\n");
                 }
                 break;
+
             case 2:
                 // Tampilkan Buku
                 if (jumlah_buku > 0) {
@@ -147,6 +150,7 @@ int main() {
                     printf("Perpustakaan kosong.\n");
                 }
                 break;
+
             case 3:
                 // Hapus Buku
                 if (jumlah_buku > 0) {
@@ -166,10 +170,14 @@ int main() {
                     printf("Perpustakaan kosong.\n");
                 }
                 break;
+
             case 4:
                 // Keluar
                 printf("Terima kasih!\n");
                 exit(0);
+
+            default:
+                printf("Pilihan tidak valid.\n");
         }
     }
 
