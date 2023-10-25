@@ -1,32 +1,54 @@
 #include <stdio.h>
 #include <string.h>
 
-int partition(char arr[10][20], int low, int high) {
-    char pivot[20];
-    strcpy(pivot, arr[high]);
-    int i = (low - 1);
-
-    for (int j = low; j <= high - 1; j++) {
-        if (strcmp(arr[j], pivot) < 0) {
-            i++;
-            char temp[20];
-            strcpy(temp, arr[i]);
-            strcpy(arr[i], arr[j]);
-            strcpy(arr[j], temp);
-        }
+void merge(char arr[10][20], int l, int m, int r) {
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 = r - m;
+    
+    char L[n1][20], R[n2][20];
+    
+    for (i = 0; i < n1; i++) {
+        strcpy(L[i], arr[l + i]);
     }
-    char temp[20];
-    strcpy(temp, arr[i + 1]);
-    strcpy(arr[i + 1], arr[high]);
-    strcpy(arr[high], temp);
-    return (i + 1);
+    for (j = 0; j < n2; j++) {
+        strcpy(R[j], arr[m + 1 + j]);
+    }
+    
+    i = 0;
+    j = 0;
+    k = l;
+    
+    while (i < n1 && j < n2) {
+        if (strcmp(L[i], R[j]) <= 0) {
+            strcpy(arr[k], L[i]);
+            i++;
+        } else {
+            strcpy(arr[k], R[j]);
+            j++;
+        }
+        k++;
+    }
+    
+    while (i < n1) {
+        strcpy(arr[k], L[i]);
+        i++;
+        k++;
+    }
+    
+    while (j < n2) {
+        strcpy(arr[k], R[j]);
+        j++;
+        k++;
+    }
 }
 
-void quickSort(char arr[10][20], int low, int high) {
-    if (low < high) {
-        int pi = partition(arr, low, high);
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
+void mergeSort(char arr[10][20], int l, int r) {
+    if (l < r) {
+        int m = l + (r - l) / 2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+        merge(arr, l, m, r);
     }
 }
 
@@ -40,7 +62,7 @@ int main() {
         printf("%s\n", nama[i]);
     }
 
-    quickSort(nama, 0, n - 1);
+    mergeSort(nama, 0, n - 1);
 
     printf("\nData setelah diurutkan:\n");
     for (i = 0; i < n; i++) {
